@@ -58,6 +58,20 @@ func (p *WindowsProcess) Executable() string {
 	return p.exe
 }
 
+func (p *WindowsProcess) ReadMemoryAt(addr uintptr) int32 {
+	var res int32
+	var nullptr int32
+
+	fmt.Printf("casted value = %d\n", (uintptr(p.pid)))
+
+	_, _, b := procToolhelp32ReadProcessMemory.Call(uintptr(p.pid), 0x424242, uintptr(unsafe.Pointer(&res)), unsafe.Sizeof(res), uintptr(unsafe.Pointer(&nullptr)))
+	if b != nil {
+		fmt.Println(b.Error())
+		fmt.Printf("read bytes = %d\n", nullptr)
+	}
+	return res
+}
+
 func newWindowsProcess(e *PROCESSENTRY32) *WindowsProcess {
 	// Find when the string ends for decoding
 	end := 0

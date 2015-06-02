@@ -39,7 +39,7 @@ func main() {
     log.Fatal(err)
   }
   for _,proc := range processes {
-    fmt.Printf("%s\n", proc.Executable())
+    fmt.Printf("%s - %d\n", proc.Executable(), proc.ReadMemoryAt(0))
   }
 
   fmt.Scanf("%d", &ok)

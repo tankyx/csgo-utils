@@ -19,6 +19,9 @@ type Process interface {
 	// Executable name running this process. This is not a path to the
 	// executable.
 	Executable() string
+
+	//Read memory at specified address
+	ReadMemoryAt(addr uintptr) int32
 }
 
 // Processes returns all processes.
