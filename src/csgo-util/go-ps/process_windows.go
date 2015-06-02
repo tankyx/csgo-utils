@@ -10,13 +10,12 @@ import (
 
 // Windows API functions
 var (
-	modKernel32                  = syscall.NewLazyDLL("kernel32.dll")
-	procCloseHandle              = modKernel32.NewProc("CloseHandle")
-	procCreateToolhelp32Snapshot = modKernel32.NewProc("CreateToolhelp32Snapshot")
-	procProcess32First           = modKernel32.NewProc("Process32FirstW")
-	procProcess32Next            = modKernel32.NewProc("Process32NextW")
-	heap32ListFirst							 = modKernel32.NewProc("Heap32ListFirst")
-	heap32listNext 							 = modKernel32.NewProc("Heap32ListNext")
+	modKernel32                   	 = syscall.NewLazyDLL("kernel32.dll")
+	procCloseHandle               	 = modKernel32.NewProc("CloseHandle")
+	procCreateToolhelp32Snapshot	 	 = modKernel32.NewProc("CreateToolhelp32Snapshot")
+	procProcess32First           	 	 = modKernel32.NewProc("Process32FirstW")
+	procProcess32Next          		 	 = modKernel32.NewProc("Process32NextW")
+	procToolhelp32ReadProcessMemory  = modKernel32.NewProc("Toolhelp32ReadProcessMemory")
 )
 
 // Some constants from the Windows API
