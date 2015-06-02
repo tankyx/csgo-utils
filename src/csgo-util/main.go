@@ -4,7 +4,9 @@ import ("fmt"
         "os/exec"
         "syscall"
         "bytes"
-        "csgo-util/routine")
+        "log"
+        "csgo-util/routine"
+        "csgo-util/go-ps")
 
 func isProcRunning(name string) (bool) {
   if len(name) == 0 {
@@ -25,7 +27,20 @@ func isProcRunning(name string) (bool) {
 }
 
 func main() {
-  fmt.Printf("Waiting for Counter Strike to be launched ... Dummy = %d", routine.ReturnDummyValue())
-  for !isProcRunning("csgo.exe") {}
+  var ok int
+
+  fmt.Printf("Waiting for Counter Strike to be launched ... Dummy %d\n", routine.ReturnDummyValue())
+
+  for !isProcRunning("firefox.exe") {}
   fmt.Printf("\a") //ring the bell
+  processes, err := ps.Processes()
+
+  if err != nil {
+    log.Fatal(err)
+  }
+  for _,proc := range processes {
+    fmt.Printf("%s\n", proc.Executable())
+  }
+
+  fmt.Scanf("%d", &ok)
 }
