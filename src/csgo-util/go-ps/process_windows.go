@@ -10,12 +10,12 @@ import (
 
 // Windows API functions
 var (
-	modKernel32                   	 = syscall.NewLazyDLL("kernel32.dll")
-	procCloseHandle               	 = modKernel32.NewProc("CloseHandle")
-	procCreateToolhelp32Snapshot	 	 = modKernel32.NewProc("CreateToolhelp32Snapshot")
-	procProcess32First           	 	 = modKernel32.NewProc("Process32FirstW")
-	procProcess32Next          		 	 = modKernel32.NewProc("Process32NextW")
-	procToolhelp32ReadProcessMemory  = modKernel32.NewProc("Toolhelp32ReadProcessMemory")
+	modKernel32                     = syscall.NewLazyDLL("kernel32.dll")
+	procCloseHandle                 = modKernel32.NewProc("CloseHandle")
+	procCreateToolhelp32Snapshot    = modKernel32.NewProc("CreateToolhelp32Snapshot")
+	procProcess32First              = modKernel32.NewProc("Process32FirstW")
+	procProcess32Next               = modKernel32.NewProc("Process32NextW")
+	procToolhelp32ReadProcessMemory = modKernel32.NewProc("Toolhelp32ReadProcessMemory")
 )
 
 // Some constants from the Windows API
@@ -62,12 +62,9 @@ func (p *WindowsProcess) ReadMemoryAt(addr uintptr) int32 {
 	var res int32
 	var nullptr int32
 
-	fmt.Printf("casted value = %d\n", (uintptr(p.pid)))
-
-	_, _, b := procToolhelp32ReadProcessMemory.Call(uintptr(p.pid), 0x424242, uintptr(unsafe.Pointer(&res)), unsafe.Sizeof(res), uintptr(unsafe.Pointer(&nullptr)))
+	_, _, b := procToolhelp32ReadProcessMemory.Call(uintptr(p.pid), addr, uintptr(unsafe.Pointer(&res)), unsafe.Sizeof(res), uintptr(unsafe.Pointer(&nullptr)))
 	if b != nil {
 		fmt.Println(b.Error())
-		fmt.Printf("read bytes = %d\n", nullptr)
 	}
 	return res
 }
