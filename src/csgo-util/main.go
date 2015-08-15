@@ -2,7 +2,6 @@ package main
 
 import (
 	"bytes"
-	"csgo-util/routine"
 	"fmt"
 	"os/exec"
 	"syscall"
@@ -32,5 +31,5 @@ func main() {
 	for !isProcRunning("csgo.exe") {
 	}
 	fmt.Printf("\a") //ring the bell
-	routine.Start()
+	Start()
 }
